@@ -1,0 +1,4 @@
+{
+  "workspace.library": ["/usr/share/awesome/lib"],
+  "workspace.checkThirdParty": false
+}
