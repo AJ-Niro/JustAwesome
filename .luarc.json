@@ -1,4 +1,11 @@
 {
   "workspace.library": ["/usr/share/awesome/lib"],
-  "workspace.checkThirdParty": false
+  "workspace.checkThirdParty": false,
+    "diagnostics.globals": [
+        "client",
+        "awesome",
+        "screen",
+        "root",
+        "mymainmenu"
+    ]
 }
