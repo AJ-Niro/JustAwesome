@@ -1,7 +1,10 @@
 -- If LuaRocks is installed, make sure that packages installed through it are
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, 'luarocks.loader')
+
+-- JustAwesome core modules
 local keybindings = require('core.keybindings')
+local mousebindings = require('core.mousebindings')
 
 -- Standard awesome library
 local awful = require('awful')
@@ -271,20 +274,6 @@ root.buttons(gears.table.join(
 ))
 -- }}}
 
-clientbuttons = gears.table.join(
-  awful.button({}, 1, function(c)
-    c:emit_signal('request::activate', 'mouse_click', { raise = true })
-  end),
-  awful.button({ keybindings.modkey }, 1, function(c)
-    c:emit_signal('request::activate', 'mouse_click', { raise = true })
-    awful.mouse.client.move(c)
-  end),
-  awful.button({ keybindings.modkey }, 3, function(c)
-    c:emit_signal('request::activate', 'mouse_click', { raise = true })
-    awful.mouse.client.resize(c)
-  end)
-)
-
 -- Set keys
 keybindings.generate_taglist_keys(tag_names)
 root.keys(keybindings.global)
@@ -302,7 +291,7 @@ awful.rules.rules = {
       focus = awful.client.focus.filter,
       raise = true,
       keys = keybindings.client,
-      buttons = clientbuttons,
+      buttons = mousebindings,
       screen = awful.screen.preferred,
       placement = awful.placement.no_overlap + awful.placement.no_offscreen,
     },
