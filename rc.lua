@@ -4,6 +4,7 @@ pcall(require, 'luarocks.loader')
 
 -- JustAwesome core modules
 local keybindings = require('core.keybindings')
+local mousebindings = require('core.mousebindings')
 local rules = require('core.rules')
 
 -- Standard awesome library
@@ -264,14 +265,8 @@ awful.screen.connect_for_each_screen(function(s)
 end)
 -- }}}
 
--- {{{ Mouse bindings
-root.buttons(gears.table.join(
-  awful.button({}, 3, function()
-    mymainmenu:toggle()
-  end),
-  awful.button({}, 4, awful.tag.viewnext),
-  awful.button({}, 5, awful.tag.viewprev)
-))
+-- {{{ Mouse bindingsEnsures that placement occurs only after all widgets have appeared on the screen.
+root.buttons(mousebindings.global)
 -- }}}
 
 -- Set keys

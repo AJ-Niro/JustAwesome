@@ -17,7 +17,7 @@ function rules.generate()
         focus = awful.client.focus.filter,
         raise = true,
         keys = keybindings.client,
-        buttons = mousebindings,
+        buttons = mousebindings.client,
         screen = awful.screen.preferred,
         placement = awful.placement.no_overlap + awful.placement.no_offscreen,
       },
