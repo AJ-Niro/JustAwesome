@@ -3,9 +3,12 @@
 pcall(require, 'luarocks.loader')
 
 -- JustAwesome core modules
+local constants = require('core.constants')
 local keybindings = require('core.keybindings')
 local mousebindings = require('core.mousebindings')
 local rules = require('core.rules')
+local keys = constants.keys
+local mouse = constants.mouse
 
 -- Standard awesome library
 local awful = require('awful')
@@ -150,39 +153,39 @@ mytextclock = wibox.widget.textclock()
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
-  awful.button({}, 1, function(t)
+  awful.button({}, mouse.left_click, function(t)
     t:view_only()
   end),
-  awful.button({ keybindings.modkey }, 1, function(t)
+  awful.button({ keys.modkey }, mouse.left_click, function(t)
     if client.focus then client.focus:move_to_tag(t) end
   end),
-  awful.button({}, 3, awful.tag.viewtoggle),
-  awful.button({ keybindings.modkey }, 3, function(t)
+  awful.button({}, mouse.right_click, awful.tag.viewtoggle),
+  awful.button({ keys.modkey }, mouse.right_click, function(t)
     if client.focus then client.focus:toggle_tag(t) end
   end),
-  awful.button({}, 4, function(t)
+  awful.button({}, mouse.scroll_up, function(t)
     awful.tag.viewnext(t.screen)
   end),
-  awful.button({}, 5, function(t)
+  awful.button({}, mouse.scroll_down, function(t)
     awful.tag.viewprev(t.screen)
   end)
 )
 
 local tasklist_buttons = gears.table.join(
-  awful.button({}, 1, function(c)
+  awful.button({}, mouse.left_click, function(c)
     if c == client.focus then
       c.minimized = true
     else
       c:emit_signal('request::activate', 'tasklist', { raise = true })
     end
   end),
-  awful.button({}, 3, function()
+  awful.button({}, mouse.right_click, function()
     awful.menu.client_list({ theme = { width = 250 } })
   end),
-  awful.button({}, 4, function()
+  awful.button({}, mouse.scroll_up, function()
     awful.client.focus.byidx(1)
   end),
-  awful.button({}, 5, function()
+  awful.button({}, mouse.scroll_down, function()
     awful.client.focus.byidx(-1)
   end)
 )
@@ -214,16 +217,16 @@ awful.screen.connect_for_each_screen(function(s)
   -- We need one layoutbox per screen.
   s.mylayoutbox = awful.widget.layoutbox(s)
   s.mylayoutbox:buttons(gears.table.join(
-    awful.button({}, 1, function()
+    awful.button({}, mouse.left_click, function()
       awful.layout.inc(1)
     end),
-    awful.button({}, 3, function()
+    awful.button({}, mouse.right_click, function()
       awful.layout.inc(-1)
     end),
-    awful.button({}, 4, function()
+    awful.button({}, mouse.scroll_up, function()
       awful.layout.inc(1)
     end),
-    awful.button({}, 5, function()
+    awful.button({}, mouse.scroll_down, function()
       awful.layout.inc(-1)
     end)
   ))
@@ -296,11 +299,11 @@ end)
 client.connect_signal('request::titlebars', function(c)
   -- buttons for the titlebar
   local buttons = gears.table.join(
-    awful.button({}, 1, function()
+    awful.button({}, mouse.left_click, function()
       c:emit_signal('request::activate', 'titlebar', { raise = true })
       awful.mouse.client.move(c)
     end),
-    awful.button({}, 3, function()
+    awful.button({}, mouse.right_click, function()
       c:emit_signal('request::activate', 'titlebar', { raise = true })
       awful.mouse.client.resize(c)
     end)
