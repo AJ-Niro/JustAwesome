@@ -7,6 +7,10 @@ local constants = require('core.constants')
 local keybindings = require('core.keybindings')
 local mousebindings = require('core.mousebindings')
 local rules = require('core.rules')
+
+-- JustAwesome native widgets
+local tasklist_widget = require('widgets.native.tasklist')
+
 local keys = constants.keys
 local mouse = constants.mouse
 
@@ -171,25 +175,6 @@ local taglist_buttons = gears.table.join(
   end)
 )
 
-local tasklist_buttons = gears.table.join(
-  awful.button({}, mouse.left_click, function(c)
-    if c == client.focus then
-      c.minimized = true
-    else
-      c:emit_signal('request::activate', 'tasklist', { raise = true })
-    end
-  end),
-  awful.button({}, mouse.right_click, function()
-    awful.menu.client_list({ theme = { width = 250 } })
-  end),
-  awful.button({}, mouse.scroll_up, function()
-    awful.client.focus.byidx(1)
-  end),
-  awful.button({}, mouse.scroll_down, function()
-    awful.client.focus.byidx(-1)
-  end)
-)
-
 local function set_wallpaper(s)
   -- Wallpaper
   if beautiful.wallpaper then
@@ -238,11 +223,7 @@ awful.screen.connect_for_each_screen(function(s)
   })
 
   -- Create a tasklist widget
-  s.mytasklist = awful.widget.tasklist({
-    screen = s,
-    filter = awful.widget.tasklist.filter.currenttags,
-    buttons = tasklist_buttons,
-  })
+  s.mytasklist = tasklist_widget.generate(s)
 
   -- Create the wibox
   s.mywibox = awful.wibar({ position = 'top', screen = s })
