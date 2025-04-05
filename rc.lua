@@ -9,6 +9,7 @@ local mousebindings = require('core.mousebindings')
 local rules = require('core.rules')
 
 -- JustAwesome native widgets
+local layoutbox_wiget = require('widgets.native.layoutbox')
 local taglist_widget = require('widgets.native.taglist')
 local tasklist_widget = require('widgets.native.tasklist')
 
@@ -180,21 +181,8 @@ awful.screen.connect_for_each_screen(function(s)
   s.mypromptbox = awful.widget.prompt()
   -- Create an imagebox widget which will contain an icon indicating which layout we're using.
   -- We need one layoutbox per screen.
-  s.mylayoutbox = awful.widget.layoutbox(s)
-  s.mylayoutbox:buttons(gears.table.join(
-    awful.button({}, mouse.left_click, function()
-      awful.layout.inc(1)
-    end),
-    awful.button({}, mouse.right_click, function()
-      awful.layout.inc(-1)
-    end),
-    awful.button({}, mouse.scroll_up, function()
-      awful.layout.inc(1)
-    end),
-    awful.button({}, mouse.scroll_down, function()
-      awful.layout.inc(-1)
-    end)
-  ))
+  s.mylayoutbox = layoutbox_wiget.generate(s)
+
   -- Create a taglist widget
   s.mytaglist = taglist_widget.generate(s)
 
