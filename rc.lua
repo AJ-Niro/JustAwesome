@@ -9,9 +9,9 @@ local mousebindings = require('core.mousebindings')
 local rules = require('core.rules')
 
 -- JustAwesome native widgets
+local taglist_widget = require('widgets.native.taglist')
 local tasklist_widget = require('widgets.native.tasklist')
 
-local keys = constants.keys
 local mouse = constants.mouse
 
 -- Standard awesome library
@@ -155,26 +155,6 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
--- Create a wibox for each screen and add it
-local taglist_buttons = gears.table.join(
-  awful.button({}, mouse.left_click, function(t)
-    t:view_only()
-  end),
-  awful.button({ keys.modkey }, mouse.left_click, function(t)
-    if client.focus then client.focus:move_to_tag(t) end
-  end),
-  awful.button({}, mouse.right_click, awful.tag.viewtoggle),
-  awful.button({ keys.modkey }, mouse.right_click, function(t)
-    if client.focus then client.focus:toggle_tag(t) end
-  end),
-  awful.button({}, mouse.scroll_up, function(t)
-    awful.tag.viewnext(t.screen)
-  end),
-  awful.button({}, mouse.scroll_down, function(t)
-    awful.tag.viewprev(t.screen)
-  end)
-)
-
 local function set_wallpaper(s)
   -- Wallpaper
   if beautiful.wallpaper then
@@ -216,11 +196,7 @@ awful.screen.connect_for_each_screen(function(s)
     end)
   ))
   -- Create a taglist widget
-  s.mytaglist = awful.widget.taglist({
-    screen = s,
-    filter = awful.widget.taglist.filter.all,
-    buttons = taglist_buttons,
-  })
+  s.mytaglist = taglist_widget.generate(s)
 
   -- Create a tasklist widget
   s.mytasklist = tasklist_widget.generate(s)
