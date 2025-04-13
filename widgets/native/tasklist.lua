@@ -1,6 +1,7 @@
 local awful = require('awful')
 local constants = require('core.constants')
 local gears = require('gears')
+local wibox = require('wibox')
 
 local mouse = constants.mouse
 
@@ -25,11 +26,47 @@ tasklist_widget.buttons = gears.table.join(
   end)
 )
 
-tasklist_widget.generate = function(s)
+tasklist_widget.generate = function(s, props)
+  if props == nil then props = {} end
+  if props.spacing == nil then props.spacing = 5 end
+  if props.focus_bar_height == nil then props.focus_bar_height = 3 end
   return awful.widget.tasklist({
     screen = s,
     filter = awful.widget.tasklist.filter.currenttags,
+    source = function()
+      -- Reverse the list of clients
+      local clients = awful.widget.tasklist.source.all_clients()
+      local reversed_clients = {}
+      for i = #clients, 1, -1 do
+        table.insert(reversed_clients, clients[i])
+      end
+      return reversed_clients
+    end,
     buttons = tasklist_widget.buttons,
+    layout = {
+      spacing = props.spacing,
+      layout = wibox.layout.fixed.horizontal,
+    },
+    widget_template = {
+      {
+        {
+          id = 'icon_role',
+          widget = wibox.widget.imagebox,
+        },
+        valign = 'center',
+        halign = 'center',
+        widget = wibox.container.place,
+      },
+      {
+        wibox.widget.base.make_widget(),
+        forced_height = props.focus_bar_height,
+        id = 'background_role',
+        widget = wibox.container.background,
+      },
+      homogeneous = false,
+      expand = true,
+      layout = wibox.layout.grid,
+    },
   })
 end
 
