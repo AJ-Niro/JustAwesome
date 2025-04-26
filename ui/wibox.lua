@@ -36,7 +36,6 @@ wibox_widget.generate = function(s)
       {
         layout = wibox.layout.fixed.horizontal,
         spacing = 5,
-        mylauncher,
         s.mylayoutbox,
         s.mytasklist,
         s.mypromptbox,
