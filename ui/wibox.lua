@@ -25,6 +25,11 @@ wibox_widget.generate = function(s)
   -- Create a tasklist widget
   s.mytasklist = tasklist_widget.generate(s)
 
+  s.mykeyboardlayout = awful.widget.keyboardlayout()
+
+  -- Create a textclock widget
+  s.mytextclock = wibox.widget.textclock()
+
   -- Add widgets to the wibox
   s.mywibox:setup({
     {
@@ -40,9 +45,9 @@ wibox_widget.generate = function(s)
       {
         layout = wibox.layout.fixed.horizontal,
         spacing = 5,
-        mykeyboardlayout,
+        s.mykeyboardlayout,
         wibox.widget.systray(),
-        mytextclock,
+        s.mytextclock,
       },
       layout = wibox.layout.align.horizontal,
     },
