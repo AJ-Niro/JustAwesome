@@ -9,6 +9,9 @@ local tasklist_widget = require('widgets.native.tasklist')
 local wibox_widget = {}
 
 wibox_widget.generate = function(s)
+  -- Create the wibox
+  s.mywibox = awful.wibar({ position = 'top', screen = s })
+
   -- Create a promptbox for each screen
   s.mypromptbox = awful.widget.prompt()
 
@@ -22,15 +25,11 @@ wibox_widget.generate = function(s)
   -- Create a tasklist widget
   s.mytasklist = tasklist_widget.generate(s)
 
-  -- Create the wibox
-  s.mywibox = awful.wibar({ position = 'top', screen = s })
-
   -- Add widgets to the wibox
   s.mywibox:setup({
     layout = wibox.layout.align.horizontal,
     { -- Left widgets
       layout = wibox.layout.fixed.horizontal,
-      mylauncher,
       s.mytaglist,
       s.mypromptbox,
     },
