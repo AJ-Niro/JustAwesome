@@ -6,6 +6,9 @@ local layoutbox_wiget = require('widgets.native.layoutbox')
 local taglist_widget = require('widgets.native.taglist')
 local tasklist_widget = require('widgets.native.tasklist')
 
+-- JustAwesome standalone widgets
+local battery_widget = require('widgets.standalone.battery')
+
 local wibox_widget = {}
 
 wibox_widget.generate = function(s)
@@ -44,6 +47,10 @@ wibox_widget.generate = function(s)
       {
         layout = wibox.layout.fixed.horizontal,
         spacing = 5,
+        battery_widget.generate_overwriting({
+          icon_size = s.mywibox.height - 12,
+          text_size = s.mywibox.height - 14,
+        }),
         s.mykeyboardlayout,
         wibox.widget.systray(),
         s.mytextclock,
