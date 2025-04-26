@@ -3,6 +3,7 @@
 pcall(require, 'luarocks.loader')
 
 -- JustAwesome core modules
+local config = require('core.config')
 local keybindings = require('core.keybindings')
 local mousebindings = require('core.mousebindings')
 local rules = require('core.rules')
@@ -66,9 +67,6 @@ end
 -- beautiful.init(gears.filesystem.get_themes_dir() .. 'default/theme.lua')
 beautiful.init(require('themes.theme'))
 
--- Bind home row keys to tags
-local tag_names = { 'a', 's', 'd', 'f', 'j', 'k', 'l', ';' }
-
 -- This is used later as the default terminal and editor to run.
 terminal = 'x-terminal-emulator'
 editor = os.getenv('EDITOR') or 'editor'
@@ -82,24 +80,7 @@ editor_cmd = terminal .. ' -e ' .. editor
 -- modkey = 'Mod4'
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
-awful.layout.layouts = {
-  awful.layout.suit.floating,
-  awful.layout.suit.tile,
-  awful.layout.suit.tile.left,
-  awful.layout.suit.tile.bottom,
-  awful.layout.suit.tile.top,
-  awful.layout.suit.fair,
-  awful.layout.suit.fair.horizontal,
-  awful.layout.suit.spiral,
-  awful.layout.suit.spiral.dwindle,
-  awful.layout.suit.max,
-  awful.layout.suit.max.fullscreen,
-  awful.layout.suit.magnifier,
-  awful.layout.suit.corner.nw,
-  -- awful.layout.suit.corner.ne,
-  -- awful.layout.suit.corner.sw,
-  -- awful.layout.suit.corner.se,
-}
+awful.layout.layouts = config.layouts
 -- }}}
 
 -- {{{ Menu
@@ -171,7 +152,7 @@ awful.screen.connect_for_each_screen(function(s)
   set_wallpaper(s)
 
   -- Each screen has its own tag table.
-  awful.tag(tag_names, s, awful.layout.layouts[1])
+  awful.tag(config.tag_names, s, awful.layout.layouts[1])
   awful.tag.viewonly(s.tags[4])
 
   -- Generate Wibox (Top bar) widget
@@ -184,7 +165,7 @@ root.buttons(mousebindings.global)
 -- }}}
 
 -- Set keys
-keybindings.generate_taglist_keys(tag_names)
+keybindings.generate_taglist_keys(config.tag_names)
 root.keys(keybindings.global)
 -- }}}
 
