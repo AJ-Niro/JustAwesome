@@ -6,6 +6,9 @@
         "awesome",
         "screen",
         "root",
-        "mymainmenu"
-    ]
+        "mymainmenu",
+        "terminal",
+        "editor",
+        "editor_cmd"
+  ]
 }
