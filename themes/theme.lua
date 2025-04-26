@@ -9,7 +9,7 @@ local tokyo_night_colors = require('themes.tokyo_night.night_colors')
 
 local theme = {}
 
-theme.font = 'sans bold 10'
+theme.font = 'Hack Nerd Font Bold 12'
 
 theme.bg_normal = tokyo_night_colors.bg
 theme.bg_focus = tokyo_night_colors.blue
