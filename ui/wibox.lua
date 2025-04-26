@@ -27,20 +27,30 @@ wibox_widget.generate = function(s)
 
   -- Add widgets to the wibox
   s.mywibox:setup({
-    layout = wibox.layout.align.horizontal,
-    { -- Left widgets
-      layout = wibox.layout.fixed.horizontal,
+    {
+      {
+        layout = wibox.layout.fixed.horizontal,
+        spacing = 5,
+        mylauncher,
+        s.mylayoutbox,
+        s.mytasklist,
+        s.mypromptbox,
+      },
+      nil,
+      {
+        layout = wibox.layout.fixed.horizontal,
+        spacing = 5,
+        mykeyboardlayout,
+        wibox.widget.systray(),
+        mytextclock,
+      },
+      layout = wibox.layout.align.horizontal,
+    },
+    {
+      layout = wibox.container.place,
       s.mytaglist,
-      s.mypromptbox,
     },
-    s.mytasklist, -- Middle widget
-    { -- Right widgets
-      layout = wibox.layout.fixed.horizontal,
-      mykeyboardlayout,
-      wibox.widget.systray(),
-      mytextclock,
-      s.mylayoutbox,
-    },
+    layout = wibox.layout.stack,
   })
 end
 
