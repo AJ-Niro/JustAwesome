@@ -13,6 +13,7 @@ local titlebar_ui = require('ui.titlebar')
 local wibox_ui = require('ui.wibox')
 
 -- JustAwesome Standalone Widgets
+local media_player_widget = require('widgets.standalone.media_player')
 local volume_widget = require('widgets.standalone.volume')
 
 -- Standard awesome library
@@ -107,7 +108,7 @@ root.buttons(mousebindings.global)
 
 -- Set keys
 keybindings.generate_taglist_keys(config.tag_names)
-local all_keybindings = gears.table.join(keybindings.global, volume_widget.keybindings)
+local all_keybindings = gears.table.join(keybindings.global, volume_widget.keybindings, media_player_widget.keybindings)
 root.keys(all_keybindings)
 -- }}}
 
