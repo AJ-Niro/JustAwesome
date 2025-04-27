@@ -1,6 +1,6 @@
 local awful = require('awful')
 local beautiful = require('beautiful')
-local gears = require('gears')
+local helpers = require('utils.helpers')
 local wibox = require('wibox')
 
 local battery = {}
@@ -28,36 +28,16 @@ battery.icons = {
 
 -- }}}
 
--- {{{
--- HELPERS
-
-local function resize_font(new_size)
-  local split_font = {}
-  for word in string.gmatch(beautiful.font, '%S+') do
-    table.insert(split_font, word)
-  end
-
-  split_font[#split_font + 1] = new_size
-
-  return table.concat(split_font, ' ')
-end
-
-local function span_tag_wrapper(text)
-  return '<span weight="bold">' .. text .. '</span>'
-end
-
--- }}}
-
 battery.widget = wibox.widget({
   {
     id = 'icon',
     widget = wibox.widget.textbox,
-    markup = span_tag_wrapper(battery.icons['0']),
+    markup = helpers.span_tag_wrapper(battery.icons['0']),
   },
   {
     id = 'text',
     widget = wibox.widget.textbox,
-    markup = span_tag_wrapper('0%'),
+    markup = helpers.span_tag_wrapper('0%'),
   },
   spacing = 3,
   valign = 'center',
@@ -71,9 +51,11 @@ battery.generate_overwriting = function(props)
   local text_widget = battery.widget:get_children_by_id('text')[1]
   local icon_widget = battery.widget:get_children_by_id('icon')[1]
 
-  if props.icon_size ~= nil then icon_widget.font = resize_font(props.icon_size) end
+  local current_font = beautiful.font
 
-  if props.text_size ~= nil then text_widget.font = resize_font(props.text_size) end
+  if props.icon_size ~= nil then icon_widget.font = helpers.resize_font(current_font, props.icon_size) end
+
+  if props.text_size ~= nil then text_widget.font = helpers.resize_font(current_font, props.text_size) end
 
   if props.spacing ~= nil then battery.widget.spacing = props.spacing end
 
@@ -98,10 +80,10 @@ battery.update_widget = function(stdout)
 
   if battery_percentage then
     local battery_icon = battery.get_battery_icon(battery_percentage)
-    icon_widget.markup = span_tag_wrapper(battery_icon .. bolt_icon)
-    text_widget.markup = span_tag_wrapper(battery_percentage .. '%')
+    icon_widget.markup = helpers.span_tag_wrapper(battery_icon .. bolt_icon)
+    text_widget.markup = helpers.span_tag_wrapper(battery_percentage .. '%')
   else
-    text_widget.markup = span_tag_wrapper('N/A')
+    text_widget.markup = helpers.span_tag_wrapper('N/A')
   end
 end
 
