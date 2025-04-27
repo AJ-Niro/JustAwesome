@@ -12,6 +12,9 @@ local rules = require('core.rules')
 local titlebar_ui = require('ui.titlebar')
 local wibox_ui = require('ui.wibox')
 
+-- JustAwesome Standalone Widgets
+local volume_widget = require('widgets.standalone.volume')
+
 -- Standard awesome library
 local awful = require('awful')
 local gears = require('gears')
@@ -104,7 +107,8 @@ root.buttons(mousebindings.global)
 
 -- Set keys
 keybindings.generate_taglist_keys(config.tag_names)
-root.keys(keybindings.global)
+local all_keybindings = gears.table.join(keybindings.global, volume_widget.keybindings)
+root.keys(all_keybindings)
 -- }}}
 
 -- {{{ Rules
