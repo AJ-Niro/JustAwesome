@@ -161,4 +161,8 @@ keybindings.generate_taglist_keys = function(tag_keys_table)
   end
 end
 
+keybindings.extra = gears.table.join(awful.key({}, 'Print', function()
+  awful.spawn.with_shell('flameshot gui')
+end, { description = 'Take a screenshot', group = 'media' }))
+
 return keybindings

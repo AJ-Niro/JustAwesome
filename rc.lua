@@ -108,6 +108,7 @@ root.buttons(mousebindings.global)
 keybindings.generate_taglist_keys(config.tag_names)
 local all_keybindings = gears.table.join(
   keybindings.global,
+  keybindings.extra,
   volume_widget.keybindings,
   media_player_widget.keybindings,
   brightness_widget.keybindings
