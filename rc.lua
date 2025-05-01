@@ -2,6 +2,10 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, 'luarocks.loader')
 
+-- Theme handling library
+local beautiful = require('beautiful')
+beautiful.init(require('themes.theme'))
+
 -- JustAwesome core modules
 local config = require('core.config')
 local keybindings = require('core.keybindings')
@@ -21,8 +25,6 @@ local awful = require('awful')
 local gears = require('gears')
 require('awful.autofocus')
 
--- Theme handling library
-local beautiful = require('beautiful')
 -- Notification library
 local naughty = require('naughty')
 
@@ -54,11 +56,6 @@ do
   end)
 end
 -- }}}
-
--- {{{ Variable definitions
--- Themes define colours, icons, font and wallpapers.
--- beautiful.init(gears.filesystem.get_themes_dir() .. 'default/theme.lua')
-beautiful.init(require('themes.theme'))
 
 -- This is used later as the default terminal and editor to run.
 terminal = 'x-terminal-emulator'
