@@ -32,11 +32,13 @@ battery.widget = wibox.widget({
   {
     id = 'icon',
     widget = wibox.widget.textbox,
+    font = beautiful.font,
     markup = helpers.span_tag_wrapper(battery.icons['0']),
   },
   {
     id = 'text',
     widget = wibox.widget.textbox,
+    font = beautiful.font,
     markup = helpers.span_tag_wrapper('0%'),
   },
   spacing = 3,
@@ -47,15 +49,6 @@ battery.widget = wibox.widget({
 
 battery.generate_overwriting = function(props)
   if props == nil then props = {} end
-
-  local text_widget = battery.widget:get_children_by_id('text')[1]
-  local icon_widget = battery.widget:get_children_by_id('icon')[1]
-
-  local current_font = beautiful.font
-
-  if props.icon_size ~= nil then icon_widget.font = helpers.resize_font(current_font, props.icon_size) end
-
-  if props.text_size ~= nil then text_widget.font = helpers.resize_font(current_font, props.text_size) end
 
   if props.spacing ~= nil then battery.widget.spacing = props.spacing end
 

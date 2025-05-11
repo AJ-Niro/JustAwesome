@@ -48,14 +48,8 @@ wibox_widget.generate = function(s)
       {
         layout = wibox.layout.fixed.horizontal,
         spacing = 5,
-        volume_widget.generate_overwriting({
-          icon_size = s.mywibox.height - 12,
-          text_size = s.mywibox.height - 14,
-        }),
-        battery_widget.generate_overwriting({
-          icon_size = s.mywibox.height - 12,
-          text_size = s.mywibox.height - 14,
-        }),
+        volume_widget.generate_overwriting(),
+        battery_widget.generate_overwriting(),
         s.mykeyboardlayout,
         wibox.widget.systray(),
         s.mytextclock,
