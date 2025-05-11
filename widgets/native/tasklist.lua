@@ -7,6 +7,8 @@ local mouse = constants.mouse
 
 local tasklist_widget = {}
 
+tasklist_widget.fallback_icon = gears.filesystem.get_configuration_dir() .. 'assets/default_client_icon.png'
+
 tasklist_widget.buttons = gears.table.join(
   awful.button({}, mouse.left_click, function(c)
     if c == client.focus then
@@ -66,6 +68,9 @@ tasklist_widget.generate = function(s, props)
       homogeneous = false,
       expand = true,
       layout = wibox.layout.grid,
+      update_callback = function(self, c)
+        if not c.icon then self:get_children_by_id('icon_role')[1].image = tasklist_widget.fallback_icon end
+      end,
     },
   })
 end
