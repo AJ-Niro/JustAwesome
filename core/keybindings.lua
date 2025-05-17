@@ -8,13 +8,7 @@ local keys = constants.keys
 local keybindings = {}
 
 keybindings.global = gears.table.join(
-  awful.key({ keys.modkey }, 'Left', awful.tag.viewprev, { description = 'view previous', group = 'tag' }),
-  awful.key({ keys.modkey }, 'Right', awful.tag.viewnext, { description = 'view next', group = 'tag' }),
   awful.key({ keys.modkey }, 'Escape', awful.tag.history.restore, { description = 'go back', group = 'tag' }),
-
-  awful.key({ keys.modkey }, 'w', function()
-    mymainmenu:show()
-  end, { description = 'show main menu', group = 'awesome' }),
 
   -- Layout manipulation
   awful.key(
@@ -23,36 +17,19 @@ keybindings.global = gears.table.join(
     awful.client.urgent.jumpto,
     { description = 'jump to urgent client', group = 'client' }
   ),
+
   awful.key({ keys.modkey }, 'Tab', function()
     awful.client.focus.history.previous()
     if client.focus then client.focus:raise() end
   end, { description = 'go back', group = 'client' }),
 
-  -- Standard program
   awful.key({ keys.modkey }, 'Return', function()
     awful.spawn(terminal)
   end, { description = 'open a terminal', group = 'launcher' }),
+
   awful.key({ keys.modkey, 'Control' }, 'r', awesome.restart, { description = 'reload awesome', group = 'awesome' }),
   awful.key({ keys.modkey, 'Shift' }, 'q', awesome.quit, { description = 'quit awesome', group = 'awesome' }),
 
-  awful.key({ keys.modkey }, 'l', function()
-    awful.tag.incmwfact(0.05)
-  end, { description = 'increase master width factor', group = 'layout' }),
-  awful.key({ keys.modkey }, 'h', function()
-    awful.tag.incmwfact(-0.05)
-  end, { description = 'decrease master width factor', group = 'layout' }),
-  awful.key({ keys.modkey, 'Shift' }, 'h', function()
-    awful.tag.incnmaster(1, nil, true)
-  end, { description = 'increase the number of master clients', group = 'layout' }),
-  awful.key({ keys.modkey, 'Shift' }, 'l', function()
-    awful.tag.incnmaster(-1, nil, true)
-  end, { description = 'decrease the number of master clients', group = 'layout' }),
-  awful.key({ keys.modkey, 'Control' }, 'h', function()
-    awful.tag.incncol(1, nil, true)
-  end, { description = 'increase the number of columns', group = 'layout' }),
-  awful.key({ keys.modkey, 'Control' }, 'l', function()
-    awful.tag.incncol(-1, nil, true)
-  end, { description = 'decrease the number of columns', group = 'layout' }),
   awful.key({ keys.modkey }, 'space', function()
     awful.layout.inc(1)
   end, { description = 'select next', group = 'layout' }),
@@ -79,14 +56,14 @@ keybindings.global = gears.table.join(
       history_path = awful.util.get_cache_dir() .. '/history_eval',
     })
   end, { description = 'lua execute prompt', group = 'awesome' }),
-  -- Menubar
+
   awful.key({ keys.modkey }, 'p', function()
     menubar.show()
   end, { description = 'show the menubar', group = 'launcher' })
 )
 
 keybindings.client = gears.table.join(
-  awful.key({ keys.modkey }, 'f', function(c)
+  awful.key({ keys.modkey, 'Mod1' }, 'f', function(c)
     c.fullscreen = not c.fullscreen
     c:raise()
   end, { description = 'toggle fullscreen', group = 'client' }),
@@ -131,32 +108,19 @@ keybindings.generate_taglist_keys = function(tag_keys_table)
   for i, key in ipairs(tag_keys_table) do
     keybindings.global = gears.table.join(
       keybindings.global,
-      -- View tag only.
+
       awful.key({ keys.modkey }, key, function()
         local screen = awful.screen.focused()
         local tag = screen.tags[i]
         if tag then tag:view_only() end
       end, { description = 'view tag #' .. key, group = 'tag' }),
-      -- Toggle tag display.
-      awful.key({ keys.modkey, 'Control' }, '#' .. i + 9, function()
-        local screen = awful.screen.focused()
-        local tag = screen.tags[i]
-        if tag then awful.tag.viewtoggle(tag) end
-      end, { description = 'toggle tag #' .. i, group = 'tag' }),
-      -- Move client to tag.
+
       awful.key({ keys.modkey, 'Shift' }, key, function()
         if client.focus then
           local tag = client.focus.screen.tags[i]
           if tag then client.focus:move_to_tag(tag) end
         end
-      end, { description = 'move focused client to tag #' .. i, group = 'tag' }),
-      -- Toggle tag on focused client.
-      awful.key({ keys.modkey, 'Control', 'Shift' }, '#' .. i + 9, function()
-        if client.focus then
-          local tag = client.focus.screen.tags[i]
-          if tag then client.focus:toggle_tag(tag) end
-        end
-      end, { description = 'toggle focused client on tag #' .. i, group = 'tag' })
+      end, { description = 'move focused client to tag #' .. key, group = 'tag' })
     )
   end
 end
