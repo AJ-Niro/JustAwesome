@@ -1,6 +1,7 @@
 local constants = {
   keys = {
     modkey = 'Mod4', -- Super / Meta / Windows Key
+    alt = 'Mod1',
   },
   mouse = {
     left_click = 1,

@@ -63,7 +63,7 @@ keybindings.global = gears.table.join(
 )
 
 keybindings.client = gears.table.join(
-  awful.key({ keys.modkey, 'Mod1' }, 'f', function(c)
+  awful.key({ keys.modkey, keys.alt }, 'f', function(c)
     c.fullscreen = not c.fullscreen
     c:raise()
   end, { description = 'toggle fullscreen', group = 'client' }),
