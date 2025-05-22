@@ -1,6 +1,7 @@
 local awful = require('awful')
 local constants = require('core.constants')
 local gears = require('gears')
+local hotkeys_popup = require('widgets.native.hotkeys_popup')
 local menubar = require('menubar')
 
 local keys = constants.keys
@@ -101,7 +102,10 @@ keybindings.client = gears.table.join(
   awful.key({ keys.modkey, 'Shift' }, 'm', function(c)
     c.maximized_horizontal = not c.maximized_horizontal
     c:raise()
-  end, { description = '(un)maximize horizontally', group = 'client' })
+  end, { description = '(un)maximize horizontally', group = 'client' }),
+  awful.key({ keys.modkey }, '\\', function()
+    hotkeys_popup:show_help()
+  end, { description = 'Show popup help', group = 'awesome' })
 )
 
 keybindings.generate_taglist_keys = function(tag_keys_table)
