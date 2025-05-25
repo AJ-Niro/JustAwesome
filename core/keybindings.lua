@@ -2,8 +2,8 @@ local awful = require('awful')
 local constants = require('core.constants')
 local gears = require('gears')
 local hotkeys_popup = require('widgets.native.hotkeys_popup')
-local menubar = require('menubar')
 
+local current_path = gears.filesystem.get_configuration_dir()
 local keys = constants.keys
 
 local keybindings = {}
@@ -59,8 +59,8 @@ keybindings.global = gears.table.join(
   end, { description = 'lua execute prompt', group = 'awesome' }),
 
   awful.key({ keys.modkey }, 'p', function()
-    menubar.show()
-  end, { description = 'show the menubar', group = 'launcher' })
+    awful.spawn.with_shell('rofi -show drun -config ' .. current_path .. 'app/rofi.rasi')
+  end, { description = 'launch rofi', group = 'launcher' })
 )
 
 keybindings.client = gears.table.join(
