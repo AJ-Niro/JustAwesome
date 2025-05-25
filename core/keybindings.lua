@@ -59,7 +59,7 @@ keybindings.global = gears.table.join(
   end, { description = 'lua execute prompt', group = 'awesome' }),
 
   awful.key({ keys.modkey }, 'p', function()
-    awful.spawn.with_shell('rofi -show drun -config ' .. current_path .. 'app/rofi.rasi')
+    awful.spawn.with_shell('rofi -show drun -config ' .. current_path .. 'apps/rofi.rasi')
   end, { description = 'launch rofi', group = 'launcher' })
 )
 
