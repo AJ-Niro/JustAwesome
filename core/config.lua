@@ -6,8 +6,9 @@ local config = {}
 config.tag_names = { 'a', 's', 'd', 'f', 'j', 'k', 'l', ';' }
 
 config.layouts = {
+  awful.layout.suit.fair,
   awful.layout.suit.floating,
-  awful.layout.suit.spiral,
+  -- awful.layout.suit.spiral,
   -- awful.layout.suit.tile,
   -- awful.layout.suit.tile.left,
   -- awful.layout.suit.tile.bottom,
