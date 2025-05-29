@@ -151,3 +151,6 @@ client.connect_signal('unfocus', function(c)
   c.border_color = beautiful.border_normal
 end)
 -- }}}
+
+local current_path = gears.filesystem.get_configuration_dir()
+awful.spawn.with_shell('picom -b --config ' .. current_path .. 'apps/picom.conf')
